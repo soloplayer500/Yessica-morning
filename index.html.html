@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Buenos días, Yessica</title>
+  <style>
+    :root{
+      --bg1:#ffe6ef; /* very light pink */
+      --bg2:#ffd2e4; /* soft pink */
+      --accent:#ff5fa2; /* hot pink */
+      --accent-2:#ff8bbf; /* medium pink */
+      --text:#4b2b3a; /* warm brown */
+      --heart:#ff71b8; /* heart pink */
+      --white:#fff;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      font-family: "Marker Felt", "Comic Sans MS", "Chalkboard SE", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #ffffffb0, #ffffff00 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100dvh;
+      height:100dvh;
+      overflow:hidden;
+      touch-action:manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wrap{
+      position:relative;
+      width:100%;
+      height:100%;
+      padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 24px);
+      display:grid;
+      grid-template-rows: 1fr auto auto;
+      align-items:center;
+      justify-items:center;
+      gap:12px;
+    }
+
+    .title{
+      text-align:center;
+      line-height:1.05;
+      text-shadow: 0 2px 0 #ffffff, 0 6px 14px #ff9ac766;
+      user-select:none;
+    }
+    .title .greet{
+      display:block;
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight:700;
+      letter-spacing:0.3px;
+    }
+    .title .name{
+      display:block;
+      font-size: clamp(44px, 10vw, 72px);
+      font-weight:800;
+      color: var(--accent);
+      transform: rotate(-1.5deg);
+    }
+
+    .bear{
+      width:min(70vw, 380px);
+      max-width:480px;
+      aspect-ratio: 1 / 1;
+      display:block;
+      filter: drop-shadow(0 12px 24px #ff87c233);
+      animation: wiggle 3.2s ease-in-out infinite;
+    }
+    @keyframes wiggle{
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(-1.2deg); }
+      50% { transform: translateY(0) rotate(0.8deg); }
+      75% { transform: translateY(-2px) rotate(-0.8deg); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .bear{ animation:none; }
+    }
+
+    .quote{
+      text-align:center;
+      font-size: clamp(16px, 3.8vw, 20px);
+      background: #ffffffaa;
+      padding: 10px 14px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px #ff9ac744;
+      user-select:none;
+    }
+
+    .heart{
+      position: fixed;
+      left:0; top:0;
+      width: 18px; height:18px;
+      transform: translate(-50%, -50%) scale(0.9);
+      pointer-events:none;
+      will-change: transform, opacity;
+      animation: floatUp 900ms ease-out forwards;
+      z-index:10;
+    }
+    @keyframes floatUp{
+      0%   { transform: translate(var(--x), var(--y)) scale(0.7) rotate(0deg); opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(calc(var(--x) - 2px), calc(var(--y) - 80px)) scale(1.35) rotate(18deg); opacity: 0; }
+    }
+
+    .bg-heart{
+      position:absolute; inset:0; pointer-events:none; overflow:hidden;
+    }
+    .bg-heart svg{ position:absolute; opacity:0.06; }
+
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app" aria-live="polite">
+    <h1 class="title" aria-label="Buenos días, hermosa. Yessica.">
+      <span class="greet">Buenos días, hermosa</span>
+      <span class="name">Yessica</span>
+    </h1>
+
+    <svg class="bear" viewBox="0 0 300 300" role="img" aria-label="Smiling teddy bear holding a pink heart">
+      <defs>
+        <radialGradient id="fur" cx="50%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#ffd6e7"/>
+          <stop offset="100%" stop-color="#ffc0da"/>
+        </radialGradient>
+        <radialGradient id="ear" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#ffe9f3"/>
+          <stop offset="100%" stop-color="#ffd6e7"/>
+        </radialGradient>
+        <linearGradient id="heartFill" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff7abf"/>
+          <stop offset="100%" stop-color="#ff4aa5"/>
+        </linearGradient>
+        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+          <feOffset dy="2" result="off"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="off"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="95" cy="85" r="28" fill="url(#fur)"/>
+      <circle cx="205" cy="85" r="28" fill="url(#fur)"/>
+      <circle cx="95" cy="85" r="16" fill="url(#ear)"/>
+      <circle cx="205" cy="85" r="16" fill="url(#ear)"/>
+
+      <circle cx="150" cy="125" r="60" fill="url(#fur)" filter="url(#soft)"/>
+
+      <ellipse cx="150" cy="140" rx="28" ry="20" fill="#ffeefa"/>
+      <circle cx="130" cy="120" r="6" fill="#5a3344"/>
+      <circle cx="170" cy="120" r="6" fill="#5a3344"/>
+      <circle cx="150" cy="138" r="5" fill="#5a3344"/>
+      <path d="M140 148 Q150 155 160 148" fill="none" stroke="#5a3344" stroke-width="3" stroke-linecap="round"/>
+
+      <ellipse cx="150" cy="205" rx="70" ry="62" fill="url(#fur)" filter="url(#soft)"/>
+
+      <ellipse cx="95" cy="190" rx="26" ry="20" fill="url(#fur)"/>
+      <ellipse cx="205" cy="190" rx="26" ry="20" fill="url(#fur)"/>
+
+      <g filter="url(#soft)">
+        <path d="M150 210
+                 c -26 -22 -60 -40 -48 -68
+                 c 8 -20 36 -18 48 2
+                 c 12 -20 40 -22 49 -1
+                 c 14 30 -22 48 -49 67z"
+              fill="url(#heartFill)" stroke="#ff2f98" stroke-width="2"/>
+        <path d="M140 175 q 6 -6 12 0" stroke="#ffd6ef" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <ellipse cx="115" cy="255" rx="26" ry="18" fill="url(#fur)"/>
+      <ellipse cx="185" cy="255" rx="26" ry="18" fill="url(#fur)"/>
+
+      <g opacity="0.5">
+        <circle cx="70" cy="60" r="3" fill="#ffffff"/>
+        <circle cx="230" cy="60" r="2.5" fill="#ffffff"/>
+        <circle cx="250" cy="120" r="2" fill="#ffffff"/>
+        <circle cx="50" cy="130" r="2.5" fill="#ffffff"/>
+      </g>
+    </svg>
+
+    <p class="quote" aria-label="Hoy será un buen día. Respira y brilla.">
+      <strong>“Hoy será un buen día. Respira y brilla.”</strong>
+    </p>
+
+    <div class="bg-heart" aria-hidden="true" id="bgHearts"></div>
+  </div>
+
+  <button class="sr-only" aria-hidden="true" id="screenreaderHint">Tap or drag to sprinkle hearts</button>
+
+  <script>
+    (function(){
+      const setVh = () => {
+        const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+      };
+      setVh();
+      window.addEventListener('resize', setVh);
+    })();
+
+    (function bgHearts(){
+      const container = document.getElementById('bgHearts');
+      const W = () => window.innerWidth;
+      const H = () => window.innerHeight;
+      const make = () => {
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const s = document.createElementNS(svgNS, 'svg');
+        s.setAttribute('width', 28);
+        s.setAttribute('height', 28);
+        s.style.left = Math.random()*W() + 'px';
+        s.style.top  = (Math.random()*H()) + 'px';
+        s.style.transition = 'transform 18s linear, opacity 18s linear';
+        s.style.transform = 'translateY(0)';
+        s.style.position = 'absolute';
+        s.style.opacity = 0.08 + Math.random()*0.08;
+        const p = document.createElementNS(svgNS, 'path');
+        p.setAttribute('d', 'M14 26 C9 22 2 18 4 10 C5 -1 16 3 14 9 C12 3 23 -1 24 10 C26 18 19 22 14 26 Z');
+        p.setAttribute('fill', 'var(--heart)');
+        s.appendChild(p);
+        container.appendChild(s);
+        requestAnimationFrame(()=>{
+          s.style.transform = 'translateY(-60px)';
+          s.style.opacity = '0.03';
+        });
+        setTimeout(()=> s.remove(), 19000);
+      };
+      let count = 0;
+      const loop = () => { if(count < 14){ make(); count++; } setTimeout(loop, 1500 + Math.random()*1200); };
+      loop();
+    })();
+
+    (function tapHearts(){
+      const MAX_HEARTS = 80;
+      let active = 0;
+
+      const createHeart = (x, y) => {
+        if(active >= MAX_HEARTS) return;
+        const h = document.createElement('div');
+        h.className = 'heart';
+        const dx = (Math.random()*12 - 6);
+        const dy = (Math.random()*12 - 6);
+        h.style.setProperty('--x', (x + dx) + 'px');
+        h.style.setProperty('--y', (y + dy) + 'px');
+        h.innerHTML = `<svg viewBox="0 0 28 28" width="18" height="18" aria-hidden="true">
+          <path d="M14 26 C9 22 2 18 4 10 C5 -1 16 3 14 9 C12 3 23 -1 24 10 C26 18 19 22 14 26 Z" fill="var(--heart)"/>
+        </svg>`;
+        document.body.appendChild(h);
+        active++;
+        h.addEventListener('animationend', ()=>{ h.remove(); active--; }, {once:true});
+      };
+
+      let lastT = 0;
+      const THROTTLE_MS = 16;
+
+      const spawn = (clientX, clientY) => {
+        const now = performance.now();
+        if(now - lastT < THROTTLE_MS) return;
+        lastT = now;
+        createHeart(clientX, clientY);
+      };
+
+      const handler = (e) => {
+        if(e.touches){
+          for(const t of e.touches){ spawn(t.clientX, t.clientY); }
+        } else {
+          spawn(e.clientX, e.clientY);
+        }
+      };
+
+      window.addEventListener('pointerdown', handler, {passive:true});
+      window.addEventListener('pointermove', handler, {passive:true});
+      window.addEventListener('touchstart', handler, {passive:true});
+      window.addEventListener('touchmove', handler, {passive:true});
+    })();
+  </script>
+
+  <div class="sr-only" aria-live="polite">Toca o arrastra el dedo para ver aparecer corazones rosados.</div>
+</body>
+</html>
